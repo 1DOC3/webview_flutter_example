@@ -29,11 +29,9 @@ class _WebView1doc3State extends State<WebView1doc3> {
   final List<String> downloadableExtensions = ['pdf', 'jpg', 'jpeg', 'png'];
 
   bool isDownloadable(String url) {
-    print('1 downloadable: =========================> $url');
     final uri = Uri.tryParse(url);
     if (uri == null) return false;
     final ext = uri.path.split('.').last.toLowerCase();
-    print('2 downloadable: =========================> $ext');
     return downloadableExtensions.contains(ext);
   }
 
@@ -127,12 +125,6 @@ class _WebView1doc3State extends State<WebView1doc3> {
     return InAppWebView(
       key: webViewKey,
       initialUrlRequest: URLRequest(url: WebUri(widget.initialUrl)),
-      // initialOptions: InAppWebViewGroupOptions(
-      //   crossPlatform: InAppWebViewOptions(
-      //     useShouldOverrideUrlLoading: true,
-      //     javaScriptEnabled: true,
-      //   ),
-      // ),
       pullToRefreshController: pullToRefreshController,
       onWebViewCreated: (controller) {
         webViewController = controller;
@@ -140,7 +132,7 @@ class _WebView1doc3State extends State<WebView1doc3> {
       initialSettings: InAppWebViewSettings(
         mediaPlaybackRequiresUserGesture: false,
         allowsPictureInPictureMediaPlayback: false,
-        allowsInlineMediaPlayback: true,
+        allowsInlineMediaPlayback: true, // Configuración que evita pantalla de video en negro en IOS
       ),
       onPermissionRequest: (controller, permissionRequest) async {
         return PermissionResponse(
